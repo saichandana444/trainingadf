@@ -1,0 +1,56 @@
+{
+	"name": "asspipeline2",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select firstname,lastname,name,salesperson,orderqty,sum(orderqty)*unitprice as worth \nfrom [SalesLT].[Customer], [SalesLT].[Product],\n[SalesLT].[SalesOrderDetail],[SalesLT].[SalesOrderHeader] where \n[SalesLT].[Customer].customerid=[SalesLT].[SalesOrderHeader].customerid and\n[SalesLT].[Product].productid=[SalesLT].[SalesOrderDetail].productid and\n[SalesLT].[SalesOrderHeader].salesorderid=[SalesLT].[SalesOrderDetail].salesorderid\n group by FirstName, LastNAme, Name, salesperson,Orderqty, UnitPrice;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSqlTable2",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2020-12-18T04:55:20Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

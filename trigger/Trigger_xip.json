@@ -1,0 +1,24 @@
+{
+	"name": "Trigger_xip",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipelinedelta",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 10,
+				"startTime": "2020-12-18T03:29:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
